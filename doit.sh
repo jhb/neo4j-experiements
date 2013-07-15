@@ -6,12 +6,11 @@
 
 echo 'setting up python and packages'
 virtualenv --no-site-packages .
-source bin/activate
-easy_install ipython ipdb simplejson requests wget
+./bin/easy_install ipython ipdb simplejson requests wget
 
 echo 'downloading and setting up neo4j'
 #put in the proper download location if another version/platform is needed
-python -m wget "http://download.neo4j.org/artifact?edition=community&version=2.0.0-M03&distribution=tarball&dlid=notread"
+./bin/python -m wget "http://download.neo4j.org/artifact?edition=community&version=2.0.0-M03&distribution=tarball&dlid=notread"
 tar xf neo4j-community-2.0.0-M03-unix.tar.gz
 ln -s neo4j-community-2.0.0-M03 server
 cp neo4j.properties server/conf
@@ -26,17 +25,17 @@ echo '(re)creating indexes (might throw errors, ignore)'
 ./server/bin/neo4j-shell -c "index --create -t Relationship relationship_auto_index"
 
 echo 'downloading data'
-python -m wget "http://downloads.dbpedia.org/3.8/de/mappingbased_properties_de.nt.bz2"
+./bin/python -m wget "http://downloads.dbpedia.org/3.8/de/mappingbased_properties_de.nt.bz2"
 echo 'unpacking data'
 bunzip2 mappingbased_properties_de.nt.bz2
 
 echo 'parsing the data (up to ca. 3050000)'
 sleep 2
-python parser.py mappingbased_properties_de.nt
+./bin/python parser.py mappingbased_properties_de.nt
 
 
 echo 'importing the data (nodes ca 576200, relations ca 1300000)'
-python importer.py
+./bin/python importer.py
 
 processing relations
 echo 

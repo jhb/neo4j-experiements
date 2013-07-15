@@ -20,7 +20,7 @@ currencies = ['japaneseYen',
               'swedishKrona']
 
 valtypes = {}
-while i<100000000: 
+while i<10000000: 
     line = f.readline()
     if not line:
         break
@@ -46,8 +46,7 @@ while i<100000000:
         print origin,reltype,
     
     target =  target.decode('unicode-escape')
-            
-    if reg_lang.match(target):
+    if reg_lang.search(target):
         value = target[1:-4]
     
     elif target.startswith('<http'):
