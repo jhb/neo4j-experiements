@@ -1,5 +1,5 @@
-neo4-experiements
-=================
+neo4j-experiements
+==================
 
 This is for setting up a neo4j playground. The script downloads the linux version.
 It requires:
@@ -9,5 +9,5 @@ It requires:
   * bunzip2, tar
   * java
 
-All you then do is run doit.sh
+Just run doit.sh
 
