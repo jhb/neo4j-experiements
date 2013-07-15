@@ -9,5 +9,9 @@ It requires:
   * bunzip2, tar
   * java
 
-Just run doit.sh
+Just run 
+
+    git clone https://github.com/jhb/neo4j-experiements.git
+    cd neo4j-experiements
+    ./doit.sh
 
