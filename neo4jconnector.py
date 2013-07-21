@@ -41,13 +41,19 @@ class BaseNeo4jConnector(object):
         self.headers = {'content-type': 'application/json',
                         'accept': 'application/json'}
     
- 
+    def __del__(self):
+        transactionurl = getattr(self,'transactionurl',None)
+        if transactionurl !=None:
+            #print 'rollback on __del__'
+            import requests,simplejson
+            self.rollbackTx()
+
     def call(self,data,method='post',url=None,reverse=1):
         
         if reverse:
             datastring = simplejson.dumps(data,item_sort_key=special_sort)
         else:
-            datastring = siimplejson.dumps(data)
+            datastring = simplejson.dumps(data)
         if self.debug:
             print datastring
 
