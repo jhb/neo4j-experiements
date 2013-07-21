@@ -10,7 +10,7 @@ repeats = int(repeats)
 # "match  p=n:node<-[*4..4]-m where n.noscenda_name='dbpedia:Berlin' return count(p);"
 
 g = neo4jconnector.BaseNeo4jConnector(debug=0)
-
+#g.debug=1
 for i in range(0,repeats):
     print 'run %s' % i
     target = 'person%s' % random.randint(1,10001)

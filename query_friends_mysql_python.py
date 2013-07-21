@@ -2,7 +2,14 @@ import MySQLdb
 import cPickle, time, uuid, sys, random
 db = MySQLdb.connect("localhost","friends","","friends" )
 
+if len(sys.argv) < 3:
+    print 'usage:%s number_of_hops repetitions' % sys.argv[0]
+    sys.exit()
+
+
 pathlength,repeats = sys.argv[1:3]
+
+
 pathlength=int(pathlength)
 repeats = int(repeats)
 
