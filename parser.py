@@ -20,7 +20,7 @@ currencies = ['japaneseYen',
               'swedishKrona']
 
 valtypes = {}
-while i<10000: 
+while i<1000000: 
     line = f.readline()
     if not line:
         break
