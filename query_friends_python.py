@@ -17,14 +17,16 @@ for i in range(repeats):
     start = time.time()
     a = random.randint(1,100001)
     print 'start at',a,'search depth',pathlength, 
-    paths = []
     startingpoints = [a]
+    x = 0
     for j in range(pathlength):
+        paths = 0
         results = set()
         for k in startingpoints:
             results.update(friends[k])
+            paths+=len(friends[k])
         startingpoints=results     
-    print 'found',len(results),'after', time.time()-start
+    print 'found',len(results),'after', time.time()-start,'secs, num paths:',paths
 print 'fini'        
 
 
