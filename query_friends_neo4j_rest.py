@@ -17,7 +17,7 @@ for i in range(0,repeats):
     print 'run %s' % i
     target = 'person%s' % random.randint(1,namerange+1)
     hops ='-->()' * (pathlength-1)
-    query = 'start n=node:node_auto_index(noscenda_name={target}) match n%s-->m return count(r);' % hops
+    query = 'start n=node:node_auto_index(noscenda_name={target}) match n%s-->m return count(*);' % hops
     #print query
     #query = 'start n=node:node_auto_index(noscenda_name={target}) return count(n)'
     start = time.time()
