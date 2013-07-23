@@ -11,12 +11,17 @@ repeats = int(repeats)
 
 g = neo4jconnector.BaseNeo4jConnector(debug=0)
 #g.debug=1
+times = []
 for i in range(0,repeats):
     print 'run %s' % i
     target = 'person%s' % random.randint(1,10001)
     start = time.time()
     result = g.queryd([['match n:node-[r*%s..%s]->m:node where n.noscenda_name={target} return count(r);' % (pathlength,pathlength),
                        dict(target=target)]])
-    print time.time()-start
+    tt = time.time()-start
+    print tt
+    times.append(tt)
     print target, 
     print result[0]['count(r)']
+avg = sum(times)/len(times)
+print 'average ',avg

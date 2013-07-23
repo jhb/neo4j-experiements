@@ -26,15 +26,16 @@ print 'relations'
 frienditems = friends.items()
 i = 1
 p = 0
+slicesize = 1000
 while p<len(frienditems):
-    items = frienditems[p:p+1000000]
+    items = frienditems[p:p+slicesize]
     with db.transaction:
-        print 'transaction relations: ',p
+        print 'transaction itemslice start: ',p
         for a,targets in items:
             for b in targets:
                 i+=1
                 getattr(nodes[a],'friend')(nodes[b])
                 if i%10000==0:
                     print 'r ',i
-    p+=1000000
+    p+=slicesize
 print 'fini'

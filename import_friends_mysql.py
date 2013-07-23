@@ -1,5 +1,12 @@
 import MySQLdb
 import cPickle, time, uuid
+
+if len(sys.argv) < 2:
+    filename = 'friends.pickle'
+else:
+    filename = sys.argv[1]
+
+
 db = MySQLdb.connect("localhost","friends","","friends" )
 print 'deleting'
 c = db.cursor()
@@ -8,7 +15,12 @@ c.execute('delete from t_user_friend;')
 db.commit()
 
 print 'reading friends'
-friends = cPickle.load(open('friends.pickle'))
+f = open(filename)
+friends = cPickle.load(f)
+f.close()
+
+
+
 i = 0
 for a,flist in friends.items():
     c.execute("insert into t_user values (%s,'person%s');" % (a,a))
