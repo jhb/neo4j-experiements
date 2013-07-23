@@ -5,7 +5,8 @@ sort_keys = dict(method=0,
                  body=2,
                  id=3,
                  query=0,
-                 params=1)
+                 params=1,
+                 script=0)
 
 def special_sort(item):
     key = item[0]
@@ -73,6 +74,25 @@ class Neo4jRestConnector(object):
                     params=params)
         datastring = simplejson.dumps(data,item_sort_key=special_sort)
         result = requests.post(self.baseurl+'/cypher',data=datastring,headers=self.headers)
+        return result.json()
+       
+
+    def traverse(self,start,what,query,paged=False):
+        datastring = simplejson.dumps(query)
+        if paged == True:            
+            url = self.baseurl+'/node/%s/paged/traverse/%s' % (start,what)
+        else:
+            url = self.baseurl+'/node/%s/traverse/%s' % (start,what)
+        result = requests.post(url,data=datastring,headers=self.headers)
+        return result.json()
+   
+    def gremlin(self,script,params=None):
+        if params==None:
+            params = {}
+        data = dict(script=script,
+                    params=params)
+        datastring = simplejson.dumps(data,item_sort_key=special_sort)
+        result = requests.post(self.baseurl+'/ext/GremlinPlugin/graphdb/execute_script',data=datastring,headers=self.headers)  
         return result.json()
         
 if __name__ == '__main__':
