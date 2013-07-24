@@ -1,5 +1,5 @@
 import MySQLdb
-import cPickle, time, uuid
+import cPickle, time, uuid, sys
 
 if len(sys.argv) < 2:
     filename = 'friends.pickle'
