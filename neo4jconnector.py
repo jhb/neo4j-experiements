@@ -20,7 +20,7 @@ g.commitTx()
 
 
 
-import requests, simplejson
+import requests, simplejson, time
 
 def special_sort(item):
     if item[0]=='statement':
@@ -30,7 +30,7 @@ def special_sort(item):
 
 class BaseNeo4jConnector(object):
     
-    def __init__(self,baseurl=None,debug=False,auto_rollback=True):
+    def __init__(self,baseurl=None,debug=False,auto_rollback=True,timed=False):
         self.debug = debug
         if baseurl==None:
             baseurl='http://localhost:7474/db/data/transaction'
@@ -39,7 +39,9 @@ class BaseNeo4jConnector(object):
         self.transactionurl=None
         self.auto_rollback=auto_rollback
         self.headers = {'content-type': 'application/json',
-                        'accept': 'application/json'}
+                        'accept': 'application/json',
+                        'max-execution-time':10000}
+        self.timed = timed
     
     def __del__(self):
         transactionurl = getattr(self,'transactionurl',None)
@@ -65,8 +67,15 @@ class BaseNeo4jConnector(object):
 
         if self.debug:
             print '%s to %s with %s' % (method,url,datastring)
+
+        if self.timed:
+            start = time.time()
+
         result = getattr(requests,method)(url,data=datastring,headers=self.headers)
         
+        if self.timed:
+            print 'time: ', time.time() - start
+
         if self.transactionurl==None:
             self.transactionurl = result.headers['location']
 
