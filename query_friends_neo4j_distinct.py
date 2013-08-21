@@ -19,7 +19,7 @@ for i in range(0,repeats):
     hops ='-[:friend]->()' * (pathlength-1)
     query = 'start person=node:node_auto_index(noscenda_name={target}) match (person)%s-[:friend]->(friend) return count(distinct friend);' % hops
     #query = 'start person=node:node_auto_index(noscenda_name={target}) match (person)%s-[:friend]->(friend) return count(friend);' % hops
-    print query
+    print query.replace('{target}',"'%s'" % target)
     #query = 'start n=node:node_auto_index(noscenda_name={target}) return count(n)'
     start = time.time()
     result = g.cypher(query,dict(target=target))
