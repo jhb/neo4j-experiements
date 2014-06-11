@@ -118,7 +118,8 @@ class BaseNeo4jConnector(object):
             cols = res['columns']
             rows = []
             for r in res['data']:
-                out.append(dict(zip(cols,r)))
+                #out.append(dict(zip(cols,r)))
+                out.append(dict(zip(cols,r["row"])))
             #out.append(rows)
         return out
 
